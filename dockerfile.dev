@@ -1,0 +1,22 @@
+ARG BASE_REGISTRY="docker.io"
+ARG BASE_IMAGE="python"
+ARG BASE_TAG="3.11.9-bookworm"
+
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} as build
+
+SHELL ["/bin/bash", "-c"]
+
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONFAULTHANDLER=1
+ENV TZ=Asia/Singapore
+
+COPY requirements.txt .
+RUN python -m venv /venv && \
+    source /venv/bin/activate && \
+    python -m pip install --upgrade --no-cache-dir pip && \
+    python -m pip install --no-cache-dir -r requirements.txt
+
+ENV PATH="/venv/bin:${PATH}"

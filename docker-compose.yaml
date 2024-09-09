@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+
+  mt-service:
+    stdin_open: true
+    tty: true
+    image: translation-eval:1.0.0
+    volumes:
+      - $PWD:/src
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    working_dir: /src
